@@ -1,0 +1,1 @@
+*/1 * * * * /bin/bash /scripts/burying_point_oss.sh /data/pc-journal-logs >> /var/log/cron.log 2>&1

@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: docker-oss-cron
+  namespace: default
+  labels:
+    app: docker-oss-cron
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker-oss-cron
+  template:
+    metadata:
+      labels:
+        app: docker-oss-cron
+    spec:
+      containers:
+      - name: docker-oss-cron
+        image: registry.cn-beijing.aliyuncs.com/jinan/docker-oss-cron:1.0.0.alpha
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          capabilities:
+            add: ["SYS_ADMIN"]
+        env:
+        - name: BUCKET_NAME
+          value: "test"
+        - name: ACCESS_KEY
+          value: "key"
+        - name: ACCESS_KEY_SECRET
+          value: "secret"
+        - name: OSS_URL
+          value: "http://oss-cn-beijing.aliyuncs.com"
+        volumeMounts:
+          - mountPath: /data/pc-journal-logs
+            name: my-pc-log
+        resources:
+          limits:
+            hostdev.k8s.io/dev_fuse: 1
+      volumes:
+      - name: my-pc-log
+        hostPath:
+          path: /data/pc-journal-logs
