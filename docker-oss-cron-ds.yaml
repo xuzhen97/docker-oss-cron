@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: docker-oss-cron
-        image: registry.cn-beijing.aliyuncs.com/jinan/docker-oss-cron:1.0.0.alpha
+        image: c1
         imagePullPolicy: IfNotPresent
         securityContext:
           capabilities:
